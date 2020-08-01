@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<inkscape-extension xmlns="http://www.inkscape.org/namespace/inkscape/extension">
+  <name>GeoKrety QR Code Placer</name>
+  <id>org.inkscape.geokrety_qr_code_placer</id>
+  <label xml:space="preserve">The placeholder ID</label>
+  <param name="placeholderid" type="string" gui-text="Placeholder ID:">placeholderQR</param>
+  <label xml:space="preserve">The QRCode ID</label>
+  <param name="qrcodeid" type="string" gui-text="QRCode ID:">qrcode</param>
+  <effect>
+    <object-type>all</object-type>
+    <effects-menu>
+      <submenu name="Render">
+        <submenu name="Barcode" />
+      </submenu>
+    </effects-menu>
+  </effect>
+  <script>
+    <command location="inx" interpreter="python">geokrety_qrcode_placer.py</command>
+  </script>
+</inkscape-extension>

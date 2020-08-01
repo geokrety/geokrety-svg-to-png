@@ -1,0 +1,115 @@
+<!doctype html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Convert .SVG to .PNG</title>
+    <script src="/static/dropzone.min.js"></script>
+</head>
+
+<body>
+    <header>
+        <h1>Convert <code>.SVG</code> to <code>.PNG</code></h1>
+        <p>
+            This service converts SVG files to PNG images.
+        </p>
+    </header>
+    <main>
+        <div class="container">
+            <div id="dropzone" class="zone">
+                <div class="dz-message" >
+                    Drop files here or click to upload.
+                </div>
+            </div>
+
+            <div id="preview-template" class="dz-preview dz-file-preview" style="display: none;">
+                <div class="dz-details">
+                    <div class="dz-filename"><span data-dz-name></span></div>
+                    <div class="dz-size" data-dz-size></div>
+                </div>
+            </div>
+
+            <div id="viewer">
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p><b>API usage:</b></p>
+        <p>Simply send a <b>POST</b> request with the input file added as a <br>
+            <b>multipart/form-data</b> with the parameter name <b>file</b> and you will <br>
+            receive the converted file in return as a PNG file.
+        <p>Based on <a href="https://github.com/theveloped/inkscape">AI, PDF and EPS to SVG converter</a> by @Tobias Scheepers<br>
+            itself based on <a href="https://github.com/as-a-service/inkscape">SVG to PNG converter</a> by <a href="https://twitter.com/steren">@steren</a><br>
+            Source on <a href="https://github.com/geokrety/geokrety-inkscape">GitHub</a></p>
+    </footer>
+</body>
+
+<script type="text/javascript">
+  var dropzone = new Dropzone('#dropzone', {
+  previewTemplate: document.querySelector('#preview-template').innerHTML,
+  parallelUploads: 1,
+  uploadMultiple: false,
+  maxFiles: 1,
+  url: "/?base64",
+  success : function(file, response){
+        this.removeFile(file);
+        var outputImg = document.createElement('img');
+        outputImg.src = "data:image/png;base64," + response;
+
+        document.querySelector('#viewer').innerHTML = "";
+        document.querySelector('#viewer').appendChild(outputImg);
+  },
+  error : function(file, error){
+        this.removeFile(file);
+        var reg = new RegExp('(^| )zone($| )','g');
+        document.querySelector('#viewer').innerHTML = "";
+        // document.querySelector('#viewer').className.replace(reg,' ');
+  }
+});
+</script>
+
+<style type="text/css">
+body {
+    background: rgb(243, 244, 245);
+    height: 100%;
+    color: rgb(100, 108, 127);
+    line-height: 1.4rem;
+    font-family: Roboto, "Open Sans", sans-serif;
+    font-size: 20px;
+    font-weight: 300;
+    text-rendering: optimizeLegibility;
+    text-align: center;
+}
+
+h1 { text-align: center; }
+
+.dz-message {
+    padding: 20px;
+}
+
+.container {
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.zone {
+    background: white;
+    border-radius: 5px;
+    border: 2px dashed rgb(100, 108, 127);
+    max-width: 100%;
+}
+
+#dropzone {
+    padding: 40px;
+}
+
+#viewer {
+    margin-top: 20px;
+}
+
+#viewer svg {
+    width: 100%;
+    height: auto;
+}
+</style>
