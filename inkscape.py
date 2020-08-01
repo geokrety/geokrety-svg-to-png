@@ -17,7 +17,7 @@ app = Flask(__name__)
 
 def convert_file(input_file_path, output_dir, output_file_path, qrcode):
 
-    call('python3 /usr/share/inkscape/extensions/render_barcode_qrcode.py --text "%s" --groupid=qrcode %s | python3 /usr/share/inkscape/extensions/geokrety_qrcode_placer.py | inkscape -p --batch-process --actions="export-filename:%s; export-plain-svg; export-text-to-path; export-dpi:300; export-area-page; export-do; FileQuit;"' %
+    call('python3 /usr/share/inkscape/extensions/render_barcode_qrcode.py --text "%s" --groupid=qrcode %s | python3 /usr/share/inkscape/extensions/geokrety_qrcode_placer.py | inkscape -p --batch-process --actions="export-filename:%s; export-plain-svg; export-text-to-path; export-dpi:300; export-area-page; export-background:white; export-background-opacity:255; export-do; FileQuit;"' %
         (qrcode, input_file_path, output_file_path), shell=True)
 
 
