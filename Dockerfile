@@ -1,5 +1,7 @@
 FROM ubuntu:21.10
 
+ARG TCE_VERSION=13.1.0
+
 ENV APP_HOME /app
 WORKDIR $APP_HOME
 
@@ -21,14 +23,13 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone \
         wget \
  && locale-gen en_US.UTF-8 \
  && pip3 install Flask requests gevent \
- && wget -q https://github.com/eosrei/twemoji-color-font/releases/download/v12.0.1/TwitterColorEmoji-SVGinOT-Linux-12.0.1.tar.gz \
- && tar zxf TwitterColorEmoji-SVGinOT-Linux-12.0.1.tar.gz \
- && cd TwitterColorEmoji-SVGinOT-Linux-12.0.1 \
+ && wget -q https://github.com/eosrei/twemoji-color-font/releases/download/v$TCE_VERSION/TwitterColorEmoji-SVGinOT-Linux-$TCE_VERSION.tar.gz \
+ && tar zxf TwitterColorEmoji-SVGinOT-Linux-$TCE_VERSION.tar.gz \
+ && cd TwitterColorEmoji-SVGinOT-Linux-$TCE_VERSION \
  && ./install.sh \
  && cd .. \
- && rm -fr TwitterColorEmoji-SVGinOT-Linux-12.0.1 TwitterColorEmoji-SVGinOT-Linux-12.0.1.tar.gz
+ && rm -fr TwitterColorEmoji-SVGinOT-Linux-$TCE_VERSION TwitterColorEmoji-SVGinOT-Linux-$TCE_VERSION.tar.gz
 
 COPY . $APP_HOME
 COPY files/extensions/* /usr/share/inkscape/extensions/
-
 CMD ["python3", "inkscape.py"]
