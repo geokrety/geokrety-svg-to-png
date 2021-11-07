@@ -74,7 +74,7 @@ class GeokretyQrCodePlacer(inkex.Effect):
         placeholder.getparent().remove(placeholder)
 
     def has_changed(self, ret):
-        # Always update the dociument
+        # Always update the document
         return True
 
 

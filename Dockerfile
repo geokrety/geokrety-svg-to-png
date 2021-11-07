@@ -30,6 +30,18 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone \
  && cd .. \
  && rm -fr TwitterColorEmoji-SVGinOT-Linux-$TCE_VERSION TwitterColorEmoji-SVGinOT-Linux-$TCE_VERSION.tar.gz
 
+# Install extensions from current extensions repository HEAD
+# This may be removed when commit e15529f3 will be included in current Inkscape releases
+# Waiting for fix: 9e1302af Fix unit conversions for uutounit and unittouu
+# Bug introduced in: e15529f3 Fix inconsistant use of units, default to px units
+RUN wget -q https://gitlab.com/inkscape/extensions/-/archive/master/extensions-master.tar \
+ && tar xf extensions-master.tar \
+ && rm -fr /usr/share/inkscape/extensions \
+ && mv extensions-master /usr/share/inkscape/extensions \
+ && rm -f extensions-master.tar \
+ && pip3 install cssselect
+
+
 COPY . $APP_HOME
 COPY files/extensions/* /usr/share/inkscape/extensions/
 CMD ["python3", "inkscape.py"]
