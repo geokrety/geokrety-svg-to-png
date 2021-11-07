@@ -1,4 +1,4 @@
-FROM ubuntu:groovy
+FROM ubuntu:21.10
 
 ENV APP_HOME /app
 WORKDIR $APP_HOME
