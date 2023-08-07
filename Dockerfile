@@ -39,7 +39,7 @@ RUN wget -q https://gitlab.com/inkscape/extensions/-/archive/master/extensions-m
  && rm -fr /usr/share/inkscape/extensions \
  && mv extensions-master /usr/share/inkscape/extensions \
  && rm -f extensions-master.tar \
- && pip3 install cssselect
+ && pip3 install cssselect tinycss2
 
 
 COPY . $APP_HOME
