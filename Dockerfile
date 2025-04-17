@@ -1,4 +1,4 @@
-FROM ubuntu:jammy
+FROM ubuntu:noble
 
 ARG TCE_VERSION=13.1.0
 
@@ -22,7 +22,7 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone \
         ttf-bitstream-vera \
         wget \
  && locale-gen en_US.UTF-8 \
- && pip3 install Flask requests gevent \
+ && pip3 install --break-system-packages Flask requests gevent \
  && wget -q https://github.com/eosrei/twemoji-color-font/releases/download/v$TCE_VERSION/TwitterColorEmoji-SVGinOT-Linux-$TCE_VERSION.tar.gz \
  && tar zxf TwitterColorEmoji-SVGinOT-Linux-$TCE_VERSION.tar.gz \
  && cd TwitterColorEmoji-SVGinOT-Linux-$TCE_VERSION \
@@ -39,7 +39,7 @@ RUN wget -q https://gitlab.com/inkscape/extensions/-/archive/master/extensions-m
  && rm -fr /usr/share/inkscape/extensions \
  && mv extensions-master /usr/share/inkscape/extensions \
  && rm -f extensions-master.tar \
- && pip3 install cssselect tinycss2
+ && pip3 install --break-system-packages cssselect tinycss2
 
 
 COPY . $APP_HOME
